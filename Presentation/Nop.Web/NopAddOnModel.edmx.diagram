@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d56a2ce245b84ca281e3b4c718d6cbe8" Name="Diagram1">
+        <EntityTypeShape EntityType="nopCommerceModel.Link" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceModel.Vote" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="nopCommerceModel.FK_Vote_Link" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="nopCommerceModel.LinkComment" Width="3.25" PointX="2.875" PointY="4" />
+        <AssociationConnector Association="nopCommerceModel.FK_LinkComment_Link" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

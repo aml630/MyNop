@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nopCommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="LinkId" />
+    </Key>
+    <Property Name="LinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Votes" Type="Int32" />
+    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Votes1" Relationship="Self.FK_Vote_Link" FromRole="Link" ToRole="Vote" />
+    <Property Name="DateAdded" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="LinkComments" Relationship="nopCommerceModel.FK_LinkComment_Link" FromRole="Link" ToRole="LinkComment" />
+  </EntityType>
+  <EntityType Name="Vote">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LinkId" Type="Int32" />
+    <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Link" Relationship="Self.FK_Vote_Link" FromRole="Vote" ToRole="Link" />
+    <Property Name="DateAdded" Type="DateTime" Precision="0" />
+  </EntityType>
+  <Association Name="FK_Vote_Link">
+    <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+    <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkId" />
+      </Principal>
+      <Dependent Role="Vote">
+        <PropertyRef Name="LinkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NopComAddOnEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Links" EntityType="Self.Link" />
+    <EntitySet Name="Votes" EntityType="Self.Vote" />
+    <AssociationSet Name="FK_Vote_Link" Association="Self.FK_Vote_Link">
+      <End Role="Link" EntitySet="Links" />
+      <End Role="Vote" EntitySet="Votes" />
+    </AssociationSet>
+    <EntitySet Name="LinkComments" EntityType="nopCommerceModel.LinkComment" />
+    <AssociationSet Name="FK_LinkComment_Link" Association="nopCommerceModel.FK_LinkComment_Link">
+      <End Role="Link" EntitySet="Links" />
+      <End Role="LinkComment" EntitySet="LinkComments" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LinkComment">
+    <Key>
+      <PropertyRef Name="LinkCommentId" />
+    </Key>
+    <Property Name="LinkCommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LinkId" Type="Int32" />
+    <Property Name="AddedDate" Type="DateTime" Precision="0" />
+    <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Likes" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <NavigationProperty Name="Link" Relationship="nopCommerceModel.FK_LinkComment_Link" FromRole="LinkComment" ToRole="Link" />
+  </EntityType>
+  <Association Name="FK_LinkComment_Link">
+    <End Type="nopCommerceModel.Link" Role="Link" Multiplicity="0..1" />
+    <End Type="nopCommerceModel.LinkComment" Role="LinkComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkId" />
+      </Principal>
+      <Dependent Role="LinkComment">
+        <PropertyRef Name="LinkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

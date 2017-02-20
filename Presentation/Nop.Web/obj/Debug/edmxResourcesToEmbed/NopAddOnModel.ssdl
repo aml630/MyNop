@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nopCommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="LinkId" />
+    </Key>
+    <Property Name="LinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Url" Type="nvarchar" MaxLength="50" />
+    <Property Name="Votes" Type="int" />
+    <Property Name="Author" Type="nvarchar" MaxLength="50" />
+    <Property Name="Image" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateAdded" Type="date" />
+  </EntityType>
+  <EntityType Name="LinkComment">
+    <Key>
+      <PropertyRef Name="LinkCommentId" />
+    </Key>
+    <Property Name="LinkCommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LinkId" Type="int" />
+    <Property Name="AddedDate" Type="date" />
+    <Property Name="CommentText" Type="nvarchar(max)" />
+    <Property Name="Likes" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+  </EntityType>
+  <EntityType Name="Vote">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LinkId" Type="int" />
+    <Property Name="IpAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateAdded" Type="date" />
+  </EntityType>
+  <Association Name="FK_LinkComment_Link">
+    <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+    <End Role="LinkComment" Type="Self.LinkComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkId" />
+      </Principal>
+      <Dependent Role="LinkComment">
+        <PropertyRef Name="LinkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vote_Link">
+    <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+    <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkId" />
+      </Principal>
+      <Dependent Role="Vote">
+        <PropertyRef Name="LinkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nopCommerceModelStoreContainer">
+    <EntitySet Name="Link" EntityType="Self.Link" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LinkComment" EntityType="Self.LinkComment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_LinkComment_Link" Association="Self.FK_LinkComment_Link">
+      <End Role="Link" EntitySet="Link" />
+      <End Role="LinkComment" EntitySet="LinkComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vote_Link" Association="Self.FK_Vote_Link">
+      <End Role="Link" EntitySet="Link" />
+      <End Role="Vote" EntitySet="Vote" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

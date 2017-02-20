@@ -1,0 +1,131 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+* {
+  box-sizing: border-box;
+  font-family: "Open Sans"; }
+
+h1, h2, p {
+  margin: 0 auto 5px auto;
+  padding: 0; }
+
+.vue-wrapper {
+  text-align: center; }
+  .vue-wrapper #vue {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1024px;
+    text-align: left; }
+    .vue-wrapper #vue .input-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1em;
+      width: calc(100% - 5.275em); }
+      .vue-wrapper #vue .input-wrapper input {
+        width: 100%;
+        padding: 0.5em;
+        padding-left: 2em;
+        border: 2px solid rgba(198, 198, 198, 0.9);
+        font-size: 1em;
+        appearance: none;
+        border-radius: 4px; }
+      .vue-wrapper #vue .input-wrapper i {
+        position: absolute;
+        top: 50%;
+        left: 0.75em;
+        transform: translateY(-50%);
+        color: rgba(198, 198, 198, 0.9); }
+    .vue-wrapper #vue button {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.5em;
+      padding: 0.6em 1em;
+      background: #fefefe;
+      cursor: pointer;
+      user-select: none;
+      appearance: none;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.1s;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid rgba(198, 198, 198, 0.9);
+      border-radius: 4px;
+      color: rgba(160, 160, 160, 0.9); }
+      .vue-wrapper #vue button:hover {
+        color: white; }
+        .vue-wrapper #vue button:hover:after {
+          background: rgba(198, 198, 198, 0.9);
+          transform: translate(0%); }
+      .vue-wrapper #vue button:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: all 0.1s;
+        z-index: -1; }
+    .vue-wrapper #vue .question {
+      margin: 0.75em auto;
+      padding: 0.5em;
+      background: rgba(198, 198, 198, 0.1);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+      transition: all 0.1s, border 0.25s ease-out; }
+      .vue-wrapper #vue .question[data-color="gray"] {
+        border-left: 4px solid rgba(198, 198, 198, 0.9); }
+      .vue-wrapper #vue .question[data-color="yellow"] {
+        border-left: 4px solid #ffba00;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25); }
+      .vue-wrapper #vue .question[data-color="green"] {
+        border-left: 4px solid #7ad03a;
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.25); }
+      .vue-wrapper #vue .question[data-color="red"] {
+        border-left: 4px solid #ea0000;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15); }
+      .vue-wrapper #vue .question .votes {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0.5em 0 0; }
+        .vue-wrapper #vue .question .votes .upvote {
+          position: relative;
+          padding: 1em;
+          cursor: pointer; }
+          .vue-wrapper #vue .question .votes .upvote:after {
+            content: "";
+            width: 0;
+            height: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid rgba(0, 0, 0, 0.75); }
+        .vue-wrapper #vue .question .votes .number-of-votes {
+          margin: 0 auto;
+          text-align: center;
+          font-size: 1.25em; }
+        .vue-wrapper #vue .question .votes .downvote {
+          position: relative;
+          padding: 1em;
+          cursor: pointer; }
+          .vue-wrapper #vue .question .votes .downvote:after {
+            content: "";
+            width: 0;
+            height: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 7px solid rgba(0, 0, 0, 0.75); }
+      .vue-wrapper #vue .question .question-and-answer {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(100% - 5em); }
+

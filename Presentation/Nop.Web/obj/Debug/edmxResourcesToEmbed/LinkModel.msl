@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="nopCommerceModelStoreContainer" CdmEntityContainer="NopAddOnEntities">
+    <EntitySetMapping Name="Links">
+      <EntityTypeMapping TypeName="nopCommerceModel.Link">
+        <MappingFragment StoreEntitySet="Link">
+          <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Votes" ColumnName="Votes" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

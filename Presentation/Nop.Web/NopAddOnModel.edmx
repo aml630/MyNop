@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="nopCommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Link">
+          <Key>
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="LinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" MaxLength="50" />
+          <Property Name="Votes" Type="int" />
+          <Property Name="Author" Type="nvarchar" MaxLength="50" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateAdded" Type="date" />
+        </EntityType>
+        <EntityType Name="LinkComment">
+          <Key>
+            <PropertyRef Name="LinkCommentId" />
+          </Key>
+          <Property Name="LinkCommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LinkId" Type="int" />
+          <Property Name="AddedDate" Type="date" />
+          <Property Name="CommentText" Type="nvarchar(max)" />
+          <Property Name="Likes" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LinkId" Type="int" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateAdded" Type="date" />
+        </EntityType>
+        <Association Name="FK_LinkComment_Link">
+          <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+          <End Role="LinkComment" Type="Self.LinkComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="LinkComment">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vote_Link">
+          <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="nopCommerceModelStoreContainer">
+          <EntitySet Name="Link" EntityType="Self.Link" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LinkComment" EntityType="Self.LinkComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LinkComment_Link" Association="Self.FK_LinkComment_Link">
+            <End Role="Link" EntitySet="Link" />
+            <End Role="LinkComment" EntitySet="LinkComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vote_Link" Association="Self.FK_Vote_Link">
+            <End Role="Link" EntitySet="Link" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="nopCommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Link">
+          <Key>
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="LinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Votes" Type="Int32" />
+          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Votes1" Relationship="Self.FK_Vote_Link" FromRole="Link" ToRole="Vote" />
+          <Property Name="DateAdded" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="LinkComments" Relationship="nopCommerceModel.FK_LinkComment_Link" FromRole="Link" ToRole="LinkComment" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LinkId" Type="Int32" />
+          <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Link" Relationship="Self.FK_Vote_Link" FromRole="Vote" ToRole="Link" />
+          <Property Name="DateAdded" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_Vote_Link">
+          <End Role="Link" Type="Self.Link" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NopComAddOnEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Links" EntityType="Self.Link" />
+          <EntitySet Name="Votes" EntityType="Self.Vote" />
+          <AssociationSet Name="FK_Vote_Link" Association="Self.FK_Vote_Link">
+            <End Role="Link" EntitySet="Links" />
+            <End Role="Vote" EntitySet="Votes" />
+          </AssociationSet>
+          <EntitySet Name="LinkComments" EntityType="nopCommerceModel.LinkComment" />
+          <AssociationSet Name="FK_LinkComment_Link" Association="nopCommerceModel.FK_LinkComment_Link">
+            <End Role="Link" EntitySet="Links" />
+            <End Role="LinkComment" EntitySet="LinkComments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LinkComment">
+          <Key>
+            <PropertyRef Name="LinkCommentId" />
+          </Key>
+          <Property Name="LinkCommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LinkId" Type="Int32" />
+          <Property Name="AddedDate" Type="DateTime" Precision="0" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Likes" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="Link" Relationship="nopCommerceModel.FK_LinkComment_Link" FromRole="LinkComment" ToRole="Link" />
+        </EntityType>
+        <Association Name="FK_LinkComment_Link">
+          <End Type="nopCommerceModel.Link" Role="Link" Multiplicity="0..1" />
+          <End Type="nopCommerceModel.LinkComment" Role="LinkComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="LinkComment">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="nopCommerceModelStoreContainer" CdmEntityContainer="NopComAddOnEntities">
+          <EntitySetMapping Name="Links">
+            <EntityTypeMapping TypeName="nopCommerceModel.Link">
+              <MappingFragment StoreEntitySet="Link">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="nopCommerceModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LinkComments">
+            <EntityTypeMapping TypeName="nopCommerceModel.LinkComment">
+              <MappingFragment StoreEntitySet="LinkComment">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="LinkCommentId" ColumnName="LinkCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

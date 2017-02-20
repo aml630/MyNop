@@ -1,0 +1,67 @@
+﻿
+@model List<Nop.Web.Link>
+
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1426403380727873";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.js"></script>*@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="vue-wrapper">
+    <div id="vue">
+        <div class="search-area">
+            <h1>Questions and Answers</h1>
+            <div class="input-wrapper">
+                <i class="fa fa-search"></i>
+                <form action="/Link/Create" method="post">
+                    <input name="stuff" />
+                    <input name="url" />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        @foreach (var link in Model)
+        {
+            <div class="question">
+                <div class="votes">
+                    <a href="/Link/UpVote?linkId=@link.LinkId"><div class="upvote"></div></a>
+                    <div class="number-of-votes">@link.Votes</div>
+                    <a href="/Link/DownVote?linkId=@link.LinkId"><div class="downvote"></div></a>
+                </div>
+
+                <div class="question-and-answer">
+                    <a href="@link.Url"><h2>@link.Title</h2></a>
+                    <p>strufff</p>
+                </div>
+
+                <div class="showCommentButton">
+                    <button class="showComment">ShowComments</button>
+                </div>
+            </div>
+
+        <!-- Contenedor Principal -->
+            <div class="comments-container">
+                 <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#@link.LinkId" data-numposts="5"></div>
+            </div>
+        }
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $('.showComment').click(function () {
+
+            $(this).parent().parent().next().toggle()
+            console.log($(this).parent().parent().next())
+        })
+
+  
+    </script>

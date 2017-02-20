@@ -1,0 +1,193 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+  box-sizing: border-box;
+  font-family: "Open Sans";
+}
+
+$background-gray: rgba(198, 198, 198, 0.1);
+$accent-gray: rgba(198, 198, 198, 0.9);
+$button-gray: rgba(198, 198, 198, 1);
+$dark-gray: rgba(0,0,0,0.75);
+$box-shadow: 0 2px 2px 0 rgba(0,0,0,0.25);
+$small-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+$medium-box-shadow: $box-shadow;
+$large-box-shadow: 0 4px 4px 0 rgba(0,0,0,0.25);
+$xlarge-box-shadow: 0 6px 6px 0 rgba(0,0,0,0.25);
+
+$gray: $accent-gray;
+$yellow: #ffba00;
+$green: #7ad03a;
+$red: #ea0000;
+
+$arrow-size: 7px;
+$border-left-size: 4px;
+
+h1, h2, p {
+  margin: 0 auto 5px auto;
+  padding: 0;
+}
+
+.vue-wrapper {
+  text-align: center;
+
+  #vue {  
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1024px;
+    text-align: left;
+
+    .input-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1em;
+      width: calc(100% - 5.275em);
+
+      input {
+        width: 100%;
+        padding: 0.5em;
+        padding-left: 2em;
+        border: 2px solid $accent-gray;
+        font-size: 1em;
+        appearance: none;
+        border-radius: 4px;
+      }
+
+      i {
+        position: absolute;
+        top: 50%;
+        left: 0.75em;
+        transform: translateY(-50%);
+        color: $accent-gray;
+      }
+    }
+
+    button {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.5em;
+      padding: 0.6em 1em;
+      background: #fefefe;
+      cursor: pointer;
+      user-select: none;
+      appearance: none;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.1s;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid $accent-gray;
+      border-radius: 4px;
+      color: darken($accent-gray, 15%);
+
+      &:hover {
+        color: white;
+        
+        &:after {
+          background: $accent-gray;
+          transform: translate(0%);
+        }
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: all 0.1s;
+        z-index: -1;
+      }
+    }
+
+    .question {
+      margin: 0.75em auto;
+      padding: 0.5em;
+      background: $background-gray;
+      box-shadow: $box-shadow;
+      transition: all 0.1s, border 0.25s ease-out;
+      
+      &[data-color="gray"] {
+        border-left: $border-left-size solid $gray;
+      }
+
+      &[data-color="yellow"] {
+        border-left: $border-left-size solid $yellow;
+        box-shadow: $large-box-shadow;
+      }
+
+      &[data-color="green"] {
+        border-left: $border-left-size solid $green;
+        box-shadow: $xlarge-box-shadow;
+      }
+
+      &[data-color="red"] {
+        border-left: $border-left-size solid $red;
+        box-shadow: $small-box-shadow;
+      }
+
+      .votes {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0.5em 0 0;
+
+        .upvote {
+          position: relative;
+          padding: 1em;
+          cursor: pointer;
+
+          &:after {
+            content: "";
+            width: 0; 
+            height: 0; 
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border-left: $arrow-size solid transparent;
+            border-right: $arrow-size solid transparent;
+            border-bottom: $arrow-size solid $dark-gray;
+          }
+        }
+
+        .number-of-votes {
+          margin: 0 auto;
+          text-align: center;
+          font-size: 1.25em;
+        }
+
+        .downvote {
+          position: relative;
+          padding: 1em;
+          cursor: pointer;
+
+          &:after {
+            content: "";
+            width: 0; 
+            height: 0; 
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border-left: $arrow-size solid transparent;
+            border-right: $arrow-size solid transparent;
+            border-top: $arrow-size solid $dark-gray;
+          }
+
+        }
+      }
+
+      .question-and-answer {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(100% - 5em);
+      }
+    }
+  }
+}
