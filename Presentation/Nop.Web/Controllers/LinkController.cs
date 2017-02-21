@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace Nop.Web.Controllers
 {
@@ -35,15 +37,7 @@ namespace Nop.Web.Controllers
 
             context2.Links.Add(link);
 
-                Vote votey = new Vote
-                {
-                    LinkId = link.LinkId,
-                    IpAddress = "123456789",
-                    DateAdded = DateTime.UtcNow
-                };
-
-                context2.Votes.Add(votey);
-
+         
 
                 context2.SaveChanges();
 
@@ -53,9 +47,17 @@ namespace Nop.Web.Controllers
 
         public ActionResult UpVote(int linkId)
         {
-           
-
+            string ipList = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             var link = db.Links.Where(x => x.LinkId == linkId).FirstOrDefault();
+
+            Vote votey = new Vote
+            {
+                LinkId = link.LinkId,
+                IpAddress = ipList,
+                DateAdded = DateTime.UtcNow
+            };
+
+            db.Votes.Add(votey);
 
             link.Votes = link.Votes + 1;
             db.SaveChanges();
@@ -87,6 +89,27 @@ namespace Nop.Web.Controllers
                 context2.LinkComments.Add(linkComment);
                 context2.SaveChanges();
             }
+            return RedirectToAction("Home");
+        }
+
+        public ActionResult GetFeeds()
+        {
+            try
+            {
+                string url = "https://feedly.com/i/subscription/feed/http://droneblog.com/feed/";
+                XmlReader reader = XmlReader.Create(url);
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                reader.Close();
+                foreach (SyndicationItem item in feed.Items)
+                {
+                    Create(item.Title.ToString(), item.BaseUri.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             return RedirectToAction("Home");
         }
     }
