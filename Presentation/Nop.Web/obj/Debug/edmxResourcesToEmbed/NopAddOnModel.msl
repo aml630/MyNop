@@ -36,5 +36,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Feeds">
+      <EntityTypeMapping TypeName="nopCommerceModel.Feed">
+        <MappingFragment StoreEntitySet="Feed">
+          <ScalarProperty Name="FeedImg" ColumnName="FeedImg" />
+          <ScalarProperty Name="FeedUrl" ColumnName="FeedUrl" />
+          <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -10,6 +10,7 @@
         <AssociationConnector Association="nopCommerceModel.FK_Vote_Link" ManuallyRouted="false" />
         <EntityTypeShape EntityType="nopCommerceModel.LinkComment" Width="3.25" PointX="2.875" PointY="4" />
         <AssociationConnector Association="nopCommerceModel.FK_LinkComment_Link" />
+        <EntityTypeShape EntityType="nopCommerceModel.Feed" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -28,5 +28,6 @@ namespace Nop.Web
         public virtual DbSet<Link> Links { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
         public virtual DbSet<LinkComment> LinkComments { get; set; }
+        public virtual DbSet<Feed> Feeds { get; set; }
     }
 }

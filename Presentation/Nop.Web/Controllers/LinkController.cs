@@ -14,13 +14,13 @@ namespace Nop.Web.Controllers
         // GET: Link
         public ActionResult Home()
         {
-            var links = db.Links.Where(x => x.Title != null && x.Author != null && x.Url != null).OrderByDescending(x=>x.Votes).ToList();
+            var links = db.Links.Where(x => x.Title != null && x.Author != null && x.Url != null).OrderByDescending(x => x.Votes).ToList();
 
 
             return View("Index", links);
         }
 
-        public ActionResult Create(string stuff, string url)
+        public ActionResult Create(string stuff, string url, string image)
         {
             using (NopComAddOnEntities context2 = new NopComAddOnEntities())
             {
@@ -31,13 +31,14 @@ namespace Nop.Web.Controllers
                     Url = url,
                     Votes = 0,
                     Author = "-Alex",
-                    DateAdded = DateTime.UtcNow
+                    DateAdded = DateTime.UtcNow,
+                    Image = image
                 };
-              
 
-            context2.Links.Add(link);
 
-         
+                context2.Links.Add(link);
+
+
 
                 context2.SaveChanges();
 
@@ -94,21 +95,49 @@ namespace Nop.Web.Controllers
 
         public ActionResult GetFeeds()
         {
-            try
+
+            var feeds = db.Feeds.ToList();
+
+            var linkTitles = db.Links.Select(x => x.Title);
+
+            foreach(Feed feedy in feeds)
             {
-                string url = "https://feedly.com/i/subscription/feed/http://droneblog.com/feed/";
-                XmlReader reader = XmlReader.Create(url);
+                XmlReader reader = XmlReader.Create(feedy.FeedUrl);
+
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
+
                 reader.Close();
+
+                var today = DateTime.Today;
+
                 foreach (SyndicationItem item in feed.Items)
                 {
-                    Create(item.Title.ToString(), item.BaseUri.ToString());
+                    var title = item.Title.Text;
+                    var url = item.Links[0].Uri.ToString();
+                    bool match = false;
+
+                    foreach (string titley in linkTitles)
+                    {
+                        if(titley == title)
+                        {
+                            match = true;
+                        }else
+                        {
+                            match = false;
+                                };
+                    }
+
+
+                    if (item.PublishDate >= today && title != null && url!= null && match==false)
+                    {
+                        Create(title, url, feedy.FeedImg);
+                    }
+
                 }
             }
-            catch (Exception ex)
-            {
 
-            }
+             
+     
 
             return RedirectToAction("Home");
         }

@@ -3,13 +3,13 @@
 
 <div id="fb-root"></div>
 <script>
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1426403380727873";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1426403380727873";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -18,12 +18,25 @@
 <div class="vue-wrapper">
     <div id="vue">
         <div class="search-area">
-            <h1>Questions and Answers</h1>
+            <h1>Add Link</h1>
             <div class="input-wrapper">
                 <i class="fa fa-search"></i>
                 <form action="/Link/Create" method="post">
                     <input name="stuff" />
                     <input name="url" />
+                    <input name="image" type="hidden" value="https://s-media-cache-ak0.pinimg.com/736x/92/9d/3d/929d3d9f76f406b5ac6020323d2d32dc.jpg" />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="search-area">
+            <h1>Add Feed</h1>
+            <div class="input-wrapper">
+                <i class="fa fa-search"></i>
+                <form action="/Feed/Create" method="post">
+                    <input name="url" />
+                    <input name="img" />
                     <button type="submit">Submit</button>
                 </form>
             </div>
@@ -32,36 +45,58 @@
         @foreach (var link in Model)
         {
             <div class="question">
-                <div class="votes">
-                    <a href="/Link/UpVote?linkId=@link.LinkId"><div class="upvote"></div></a>
-                    <div class="number-of-votes">@link.Votes</div>
-                    <a href="/Link/DownVote?linkId=@link.LinkId"><div class="downvote"></div></a>
+                <div class="flexBox">
+                    <div class="votes">
+                        <a href="/Link/UpVote?linkId=@link.LinkId"><div class="upvote"></div></a>
+                        <div class="number-of-votes">@link.Votes</div>
+                        <a href="/Link/DownVote?linkId=@link.LinkId"><div class="downvote"></div></a>
+                    </div>
+
+                    <div class="linkImage">
+                        <img src="@link.Image" height="50" width="90" />
+                    </div>
+
+                    <div class="question-and-answer">
+
+                        <a href="@link.Url"><h2>@link.Title</h2></a>
+                        <p>strufff</p>
+                    </div>
+
+                    <button class="showCommentButton">
+                        
+                        <i class="fa fa-comment-o showComment" aria-hidden="true"></i>
+                        @*<button class="showComment">Discuss</button>*@
+                    </button>
                 </div>
 
-                <div class="question-and-answer">
-                    <a href="@link.Url"><h2>@link.Title</h2></a>
-                    <p>strufff</p>
-                </div>
-
-                <div class="showCommentButton">
-                    <button class="showComment">ShowComments</button>
-                </div>
             </div>
 
         <!-- Contenedor Principal -->
             <div class="comments-container">
-                 <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#@link.LinkId" data-numposts="5"></div>
+                <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#@link.LinkId" data-numposts="5"></div>
             </div>
         }
     </div>
 </div>
+<style>
+    .flexBox {
+        display: flex;
+    }
 
-    <script type="text/javascript">
-        $('.showComment').click(function () {
+    .linkImage {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 
-            $(this).parent().parent().next().toggle()
-            console.log($(this).parent().parent().next())
-        })
+    .showComment {
+        font-size: 30px;
+    }
+</style>
+<script type="text/javascript">
+    $('.showComment').click(function () {
 
-  
-    </script>
+        $(this).parent().parent().parent().next().toggle()
+        console.log($(this).parent().parent().next())
+    })
+
+</script>

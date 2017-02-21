@@ -5,16 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="nopCommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Feed">
+          <Key>
+            <PropertyRef Name="FeedId" />
+          </Key>
+          <Property Name="FeedId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FeedUrl" Type="nvarchar" MaxLength="200" />
+          <Property Name="FeedImg" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="Link">
           <Key>
             <PropertyRef Name="LinkId" />
           </Key>
           <Property Name="LinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" />
-          <Property Name="Url" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Votes" Type="int" />
           <Property Name="Author" Type="nvarchar" MaxLength="50" />
-          <Property Name="Image" Type="nvarchar" MaxLength="50" />
+          <Property Name="Image" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DateAdded" Type="date" />
         </EntityType>
         <EntityType Name="LinkComment">
@@ -62,6 +70,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="nopCommerceModelStoreContainer">
+          <EntitySet Name="Feed" EntityType="Self.Feed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Link" EntityType="Self.Link" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LinkComment" EntityType="Self.LinkComment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
@@ -83,11 +92,11 @@
             <PropertyRef Name="LinkId" />
           </Key>
           <Property Name="LinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Votes" Type="Int32" />
           <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Votes1" Relationship="Self.FK_Vote_Link" FromRole="Link" ToRole="Vote" />
           <Property Name="DateAdded" Type="DateTime" Precision="0" />
           <NavigationProperty Name="LinkComments" Relationship="nopCommerceModel.FK_LinkComment_Link" FromRole="Link" ToRole="LinkComment" />
@@ -126,6 +135,7 @@
             <End Role="Link" EntitySet="Links" />
             <End Role="LinkComment" EntitySet="LinkComments" />
           </AssociationSet>
+          <EntitySet Name="Feeds" EntityType="nopCommerceModel.Feed" />
         </EntityContainer>
         <EntityType Name="LinkComment">
           <Key>
@@ -151,6 +161,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Feed">
+          <Key>
+            <PropertyRef Name="FeedId" />
+          </Key>
+          <Property Name="FeedId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeedUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FeedImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -189,6 +207,15 @@
                 <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
                 <ScalarProperty Name="LinkId" ColumnName="LinkId" />
                 <ScalarProperty Name="LinkCommentId" ColumnName="LinkCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feeds">
+            <EntityTypeMapping TypeName="nopCommerceModel.Feed">
+              <MappingFragment StoreEntitySet="Feed">
+                <ScalarProperty Name="FeedImg" ColumnName="FeedImg" />
+                <ScalarProperty Name="FeedUrl" ColumnName="FeedUrl" />
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

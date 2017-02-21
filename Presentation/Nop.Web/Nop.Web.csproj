@@ -241,6 +241,7 @@
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
+    <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
@@ -312,6 +313,9 @@
     <Compile Include="Factories\TopicModelFactory.cs" />
     <Compile Include="Factories\VendorModelFactory.cs" />
     <Compile Include="Factories\WidgetModelFactory.cs" />
+    <Compile Include="Feed.cs">
+      <DependentUpon>NopAddOnModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1083,6 +1087,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
+    <Folder Include="Views\Feed\" />
     <Folder Include="Views\UpVote\" />
   </ItemGroup>
   <ItemGroup>
