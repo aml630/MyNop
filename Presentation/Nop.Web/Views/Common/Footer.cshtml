@@ -21,7 +21,7 @@
                 <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
             </ul>
         </div>
-        <div class="footer-block customer-service">
+        @*<div class="footer-block customer-service">
             <div class="title">
                 <strong>@T("Footer.CustomerService")</strong>
             </div>
@@ -56,8 +56,8 @@
                     <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                 }
             </ul>
-        </div>
-        <div class="footer-block my-account">
+        </div>*@
+        @*<div class="footer-block my-account">
             <div class="title">
                 <strong>@T("Footer.MyAccount")</strong>
             </div>
@@ -82,7 +82,7 @@
                     <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                 }
             </ul>
-        </div>
+        </div>*@
         <div class="footer-block follow-us">
             <div class="social">
                 <div class="title">
@@ -94,7 +94,7 @@
         </div>
     </div>
     <div class="footer-lower">
-        <div class="footer-info">
+        @*<div class="footer-info">
             <span class="footer-disclaimer">@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
             @if (Model.DisplayTaxShippingInfoFooter)
             {
@@ -103,7 +103,7 @@
                     @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo")}))
                 </span>
             }
-        </div>
+        </div>*@
         @if (!Model.HidePoweredByNopCommerce)
         {
             <div class="footer-powered-by">

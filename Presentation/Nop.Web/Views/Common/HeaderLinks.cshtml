@@ -22,7 +22,7 @@
                 </a>
             </li>
         }
-        @if (Model.WishlistEnabled)
+        @*@if (Model.WishlistEnabled)
         {
             <li>
                 <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
@@ -39,7 +39,7 @@
                     <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
                 </a>
             </li>
-        }
+        }*@
         @Html.Widget("header_links_after")
     </ul>
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
@@ -71,3 +71,4 @@
         </script>
     }
 </div>
+

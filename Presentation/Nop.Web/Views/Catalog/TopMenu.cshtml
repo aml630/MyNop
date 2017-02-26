@@ -54,7 +54,9 @@
     {
         //no categories or topis to display? in this case let's diplay some default menu items (should we?)
         <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
-        if (Model.NewProductsEnabled)
+        <li><a href="@Url.RouteUrl("DroneNews")">Drone News</a></li>
+
+        @*if (Model.NewProductsEnabled)
         {
             <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
             </li>
@@ -69,7 +71,7 @@
         {
             <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
         }
-        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>*@
     }
     @Html.Widget("header_menu_after")
 </ul>
@@ -125,6 +127,7 @@
         });
     </script>
 }
+
 
 
 

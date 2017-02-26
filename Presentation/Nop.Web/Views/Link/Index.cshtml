@@ -1,5 +1,8 @@
 ﻿
 @model List<Nop.Web.Link>
+@using Nop.Core;
+@using Nop.Core.Domain.Customers;
+@using Nop.Core.Infrastructure;
 
 <div id="fb-root"></div>
 <script>
@@ -13,43 +16,47 @@
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<a href="/Link/GetFeeds">GetFeeds</a>
+
 
 <div class="vue-wrapper">
     <div id="vue">
-        <div class="search-area">
-            <h1>Add Link</h1>
-            <div class="input-wrapper">
-                <i class="fa fa-search"></i>
-                <form action="/Link/Create" method="post">
-                    <input name="stuff" />
-                    <input name="url" />
-                    <input name="image" type="hidden" value="https://s-media-cache-ak0.pinimg.com/736x/92/9d/3d/929d3d9f76f406b5ac6020323d2d32dc.jpg" />
-                    <button type="submit">Submit</button>
-                </form>
+        @if (EngineContext.Current.Resolve<IWorkContext>().CurrentCustomer.IsInCustomerRole("Administrators"))
+        {
+            <a href="/Link/GetFeeds"><button>GetFeeds</button></a>
+            <div class="search-area">
+                <h1>Add Link</h1>
+                <div class="input-wrapper">
+                    <i class="fa fa-search"></i>
+                    <form action="/Link/Create" method="post">
+                        <input name="stuff" placeholder="Title" />
+                        <input name="url" placeholder="Url"/>
+                        <input name="image" type="hidden" value="https://s-media-cache-ak0.pinimg.com/736x/92/9d/3d/929d3d9f76f406b5ac6020323d2d32dc.jpg" />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
-
-        </div>
-        <div class="search-area">
-            <h1>Add Feed</h1>
-            <div class="input-wrapper">
-                <i class="fa fa-search"></i>
-                <form action="/Feed/Create" method="post">
-                    <input name="url" />
-                    <input name="img" />
-                    <button type="submit">Submit</button>
-                </form>
+            <div class="search-area">
+                <h1>Add Feed</h1>
+                <div class="input-wrapper">
+                    <i class="fa fa-search"></i>
+                    <form action="/Feed/Create" method="post">
+                        <input name="url" placeholder="Url"/>
+                        <input name="img" placeholder="Image"/>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
+        }
 
-        </div>
         @foreach (var link in Model)
         {
             <div class="question">
                 <div class="flexBox">
                     <div class="votes">
-                        <a href="/Link/UpVote?linkId=@link.LinkId"><div class="upvote"></div></a>
-                        <div class="number-of-votes">@link.Votes</div>
-                        <a href="/Link/DownVote?linkId=@link.LinkId"><div class="downvote"></div></a>
+                        <div class="upvote" onclick="upVote(@link.LinkId)"></div>
+
+                        <div class="number-of-votes" id="@link.LinkId">@link.Votes</div>
+                        <div class="downvote" onclick="downVote(@link.LinkId)"></div>
                     </div>
 
                     <div class="linkImage">
@@ -59,13 +66,13 @@
                     <div class="question-and-answer">
 
                         <a href="@link.Url"><h2>@link.Title</h2></a>
-                        <p>strufff</p>
+                        <p>Published: @link.DateAdded</p>
                     </div>
 
                     <button class="showCommentButton">
-                        
+
                         <i class="fa fa-comment-o showComment" aria-hidden="true"></i>
-                        @*<button class="showComment">Discuss</button>*@
+
                     </button>
                 </div>
 
@@ -98,5 +105,36 @@
         $(this).parent().parent().parent().next().toggle()
         console.log($(this).parent().parent().next())
     })
+
+    function upVote(linkId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Link/UpVote?linkId=' + linkId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (msg) {
+                console.log("success")
+                console.log($("#" + linkId).text())
+                var number = parseInt($("#" + linkId).text()) + 1
+                $("#" + linkId).text(number);
+            }
+        });
+    }
+
+    function downVote(linkId) {
+        console.log("fired")
+        $.ajax({
+            type: 'POST',
+            url: '/Link/DownVote?linkId=' + linkId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (msg) {
+                console.log("success")
+                console.log($("#" + linkId).text())
+                var number = parseInt($("#" + linkId).text()) - 1
+                $("#" + linkId).text(number);
+            }
+        });
+    }
 
 </script>

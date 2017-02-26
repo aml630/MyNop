@@ -30,6 +30,11 @@ namespace Nop.Web.Infrastructure
                             "login/",
                             new { controller = "Customer", action = "Login" },
                             new[] { "Nop.Web.Controllers" });
+            //LinkVote
+            routes.MapLocalizedRoute("DroneNews",
+                            "DroneNews/",
+                            new { controller = "Link", action = "Home" },
+                            new[] { "Nop.Web.Controllers" });
             //register
             routes.MapLocalizedRoute("Register",
                             "register/",

@@ -2,5 +2,9 @@
   {
     "outputFile": "Views/Link/voter.css",
     "inputFile": "Views/Link/voter.scss"
+  },
+  {
+    "outputFile": "Views/Home/RecentPosts.css",
+    "inputFile": "Views/Home/RecentPosts.scss"
   }
 ]

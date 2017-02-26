@@ -6,7 +6,7 @@
 }
 <div class="page home-page">
     <div class="page-body">
-        @Html.Widget("home_page_top")
+        @*@Html.Widget("home_page_top")
         @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
         @Html.Widget("home_page_before_categories")
         @Html.Action("HomepageCategories", "Catalog")
@@ -18,6 +18,12 @@
         @Html.Action("HomePageNews", "News")
         @Html.Widget("home_page_before_poll")
         @Html.Action("HomePagePolls", "Poll")
-        @Html.Widget("home_page_bottom")
+        @Html.Widget("home_page_bottom")*@
+        
+        @Html.Partial("RecentPosts")
+
+ 
+
     </div>
 </div>
+

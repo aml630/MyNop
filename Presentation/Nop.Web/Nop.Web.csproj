@@ -683,7 +683,7 @@
     <Content Include="Content\samples\product_NightVision_1.zip" />
     <Content Include="Content\samples\product_ScienceAndFaith_1.zip" />
     <Content Include="compilerconfig.json" />
-    <Content Include="compilerconfig.json.defaults" />
+    <None Include="compilerconfig.json.defaults" />
     <EntityDeploy Include="NopAddOnModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>NopAddOnModel.Designer.cs</LastGenOutput>
@@ -1024,6 +1024,12 @@
     <Content Include="Scripts\public.onepagecheckout.js" />
     <Content Include="Scripts\public.common.js" />
     <Content Include="Themes\DefaultClean\Content\css\print.css" />
+    <Content Include="Views\Home\RecentPosts.css">
+      <DependentUpon>RecentPosts.scss</DependentUpon>
+    </Content>
+    <Content Include="Views\Home\RecentPosts.min.css">
+      <DependentUpon>RecentPosts.css</DependentUpon>
+    </Content>
     <Content Include="Views\Link\voter.css" />
     <Content Include="Views\Link\voter.min.css" />
     <Content Include="Web.config">
@@ -1084,10 +1090,11 @@
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
     <Content Include="Views\Link\Index.cshtml" />
     <Content Include="Views\Link\voter.scss" />
+    <Content Include="Views\Home\RecentPosts.cshtml" />
+    <Content Include="Views\Home\RecentPosts.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
-    <Folder Include="Views\Feed\" />
     <Folder Include="Views\UpVote\" />
   </ItemGroup>
   <ItemGroup>
@@ -1207,9 +1214,9 @@
     <Content Include="Views\Blog\BlogTags.cshtml" />
     <Content Include="Views\Blog\BlogMonths.cshtml" />
     <Content Include="Views\Blog\BlogPost.cshtml" />
-    <Content Include="Views\News\HomePageNews.cshtml" />
-    <Content Include="Views\News\List.cshtml" />
-    <Content Include="Views\News\NewsItem.cshtml" />
+    <Content Include="Views\Newsletter\News\HomePageNews.cshtml" />
+    <Content Include="Views\Newsletter\News\List.cshtml" />
+    <Content Include="Views\Newsletter\News\NewsItem.cshtml" />
     <Content Include="Views\Topic\TopicBlock.cshtml" />
     <Content Include="Views\Topic\TopicDetails.cshtml" />
     <Content Include="Views\Common\Sitemap.cshtml" />

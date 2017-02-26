@@ -14,13 +14,13 @@ namespace Nop.Web.Controllers
         // GET: Link
         public ActionResult Home()
         {
-            var links = db.Links.Where(x => x.Title != null && x.Author != null && x.Url != null).OrderByDescending(x => x.Votes).ToList();
+            var links = db.Links.Where(x => x.Title != null && x.Author != null && x.Url != null).OrderByDescending(x => x.Votes).ThenByDescending(x =>x.DateAdded).ToList();
 
 
             return View("Index", links);
         }
 
-        public ActionResult Create(string stuff, string url, string image)
+        public ActionResult Create(string stuff, string url, string image, DateTimeOffset publishDate)
         {
             using (NopComAddOnEntities context2 = new NopComAddOnEntities())
             {
@@ -31,7 +31,7 @@ namespace Nop.Web.Controllers
                     Url = url,
                     Votes = 0,
                     Author = "-Alex",
-                    DateAdded = DateTime.UtcNow,
+                    DateAdded = publishDate.LocalDateTime,
                     Image = image
                 };
 
@@ -46,7 +46,7 @@ namespace Nop.Web.Controllers
             return RedirectToAction("Home");
         }
 
-        public ActionResult UpVote(int linkId)
+        public void UpVote(int linkId)
         {
             string ipList = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             var link = db.Links.Where(x => x.LinkId == linkId).FirstOrDefault();
@@ -62,16 +62,16 @@ namespace Nop.Web.Controllers
 
             link.Votes = link.Votes + 1;
             db.SaveChanges();
-            return RedirectToAction("Home");
+            //return RedirectToAction("Home");
         }
 
-        public ActionResult DownVote(int linkId)
+        public void DownVote(int linkId)
         {
             var link = db.Links.Where(x => x.LinkId == linkId).FirstOrDefault();
 
             link.Votes = link.Votes - 1;
             db.SaveChanges();
-            return RedirectToAction("Home");
+            
         }
 
         public ActionResult AddComment(int linkId, int customerId, string comment)
@@ -108,7 +108,7 @@ namespace Nop.Web.Controllers
 
                 reader.Close();
 
-                var today = DateTime.Today;
+                var today = DateTime.Today.AddDays(-1);
 
                 foreach (SyndicationItem item in feed.Items)
                 {
@@ -118,19 +118,18 @@ namespace Nop.Web.Controllers
 
                     foreach (string titley in linkTitles)
                     {
-                        if(titley == title)
+                        if (titley == title)
                         {
                             match = true;
-                        }else
-                        {
-                            match = false;
-                                };
+                            break;
+                        }
+              
                     }
 
 
                     if (item.PublishDate >= today && title != null && url!= null && match==false)
                     {
-                        Create(title, url, feedy.FeedImg);
+                        Create(title, url, feedy.FeedImg, item.PublishDate.DateTime);
                     }
 
                 }
